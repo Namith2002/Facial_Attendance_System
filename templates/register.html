@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Student</title>
+</head>
+<body>
+    <h2>Register New Student</h2>
+    <form action="/register_student" method="POST" enctype="multipart/form-data">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+        <label>Upload Face Image:</label><br>
+        <input type="file" name="image" accept="image/*" required><br><br>
+        <button type="submit">Register</button>
+    </form>
+    <p><a href="/">Go back to Home</a></p>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Facial Recognition Attendance System</title>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        header h1 {
+            color: #333;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .buttons a:hover {
+            background-color: #004d99;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        img {
+            width: 640px;
+            height: 480px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .attendance-log {
+            margin-top: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Facial Recognition Attendance System</h1>
+    </header>
+
+    <div class="buttons">
+        <a href="/register">Register New Student</a>
+        <a href="/">Start Attendance</a>
+    </div>
+
+    <div class="container">
+        <h2>Live Video Feed</h2>
+        <img src="/video_feed" alt="Live Video Feed">
+
+        <div class="attendance-log">
+            <h3>Attendance Log</h3>
+            <ul id="attendanceList">
+                <li>No attendance records yet.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        socket.on('attendance_update', function(data) {
+            const attendanceList = document.getElementById('attendanceList');
+            if (attendanceList.children[0].textContent === "No attendance records yet.") {
+                attendanceList.innerHTML = '';
+            }
+            const newRecord = document.createElement('li');
+            newRecord.textContent = `${data.student_name} marked present at ${data.timestamp}`;
+            attendanceList.appendChild(newRecord);
+        });
+    </script>
+</body>
+</html>
